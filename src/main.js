@@ -75,6 +75,7 @@ render(){
 return (
 <React.Fragment>
 <Search  onDataFetched={this.handlec} />
+<h1>Hey map is working!!!!!</h1>
 <img src={this.state.url}/>
 </React.Fragment>
 )
