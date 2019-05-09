@@ -1,20 +1,28 @@
 import React from 'react';
 import Header from './header.js';
-import Main from './main.js';
-
+import Map from './map.js';
+import Result from './result.js';
 
 class App extends React.Component{
 constructor(props){
   super(props);
+  this.state={
+    location:{}
+  };
 }
 
-
+setLocation=(res)=>{
+  this.setState({
+    location: res
+  })
+};
 
 render(){
   return (
     <React.Fragment>
     <Header/>
-    <Main />
+    <Map onsetLoc={this.setLocation}/>
+    <Result/>
     </React.Fragment>
   )
 }
