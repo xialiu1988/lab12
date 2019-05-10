@@ -1,7 +1,5 @@
 import React from 'react';
 import superagent from 'superagent';
-import { async } from 'q';
-// import Result from './result.js';
 
 class SearchForm extends  React.Component{
 
@@ -42,16 +40,15 @@ handleSubmit=async e=>{
     })
     this.props.onDataFetched(this.state.location);
      console.log(this.state.location);
-     this.callApis();
+    await this.callApis();
 }
 
 
 callApis=async ()=>{
     await this.getWeather();
-    await this.getMovies();
-    await this.getYelp();
+    await this.getYelp();     
     await this.getEvents();
-
+    await this.getMovies();
 }
 
 getWeather = async () => {
@@ -75,10 +72,11 @@ getWeather = async () => {
   }
 
   getEvents = async () => {
-    const response= await superagent.get('https://citylab09.herokuapp.com/events',{ method: 'GET', data: this.state.location});
+    const response= await superagent.get('https://citylab09.herokuapp.com/events')
+    .query( { data: { search_query: this.state.keyword, formatted_query: this.state.location.formatted_address, latitude: this.state.location.latitude, longitude: this.state.location.longitude } });
     console.log(response);
     const body = await response;
-     await this.setState({
+  this.setState({
         Events:body.body
       });
       this.props.eventsHandler(this.state.Events);     
@@ -87,7 +85,9 @@ getWeather = async () => {
 
 
   getMovies= async () => {
-    const response= await superagent.get('https://citylab09.herokuapp.com/movies',{method: 'GET', data: this.state.location});
+    const response= await superagent.get('https://citylab09.herokuapp.com/movies')
+    .query({data:{search_query: this.state.keyword,formatted_query: this.state.location.formatted_address}});
+    console.log(this.state.keyword);
     console.log(response);
     const body = await response;
       this.setState({
