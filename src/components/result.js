@@ -63,25 +63,35 @@ constructor(props){
 
 
       return(
-          <div>
+          <section >
+            <div>
               <h2>Get weather from DarkSky API</h2>
               <ul>
            {weathers}
              </ul>
+             </div>
          <hr />
+         <div>
               <h2>Get yelp data from Yelp API</h2>
               <ul>
          {yelpData}
          </ul>
+         </div>
          <hr />
+         <div>
               <h2>Get events data from EventBright API</h2>
               <ul>
          {eventsData}
          </ul>
-         <hr />
-              <h2>Get movies from MovieDb API</h2>
-         {movieData}
          </div>
+         <hr />
+         <div>
+              <h2>Get movies from MovieDb API</h2>
+              <ul>
+         {movieData}
+         </ul>
+         </div>
+         </section>
 
       )
   }
