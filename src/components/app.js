@@ -51,7 +51,9 @@ render(){
     <React.Fragment>
     <Header/>
     <SearchForm onDataFetched={this.setLocation}  weatherHandler={this.handleWeather} yelpHandler={this.setYelp}  eventsHandler={this.setEvents} movieHandler={this.setMovie}/>
-    <Map location={this.state.location}/>
+    
+    <Map  location={this.state.location}/>
+   
     <Result darkSky={this.state.DarkSky} yelps={this.state.Yelp} events={this.state.Events}  movies={this.state.Movies}/>
     </React.Fragment>
   )
