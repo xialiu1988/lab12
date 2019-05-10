@@ -9,18 +9,16 @@ constructor(props){
     this.state={
         keyword: 'nothing yet',
        location:{},
-       DarkSky: []
+       DarkSky: [],
+       Yelp:[]
     };
 }
-
 
 handleChange=e=>{
     let keyword=e.target.value;
     this.setState({keyword:keyword});
     };
 
-   
- 
 
 handleSubmit=async e=>{
     e.preventDefault();
@@ -47,6 +45,7 @@ handleSubmit=async e=>{
 
 callApis=async ()=>{
     await this.getWeather();
+    await  this.getYelp();
 }
 
 getWeather = async () => {
@@ -55,34 +54,28 @@ getWeather = async () => {
       this.setState({
         DarkSky:body.body
       });
-      console.log(this.state.DarkSky);
-    //   this.props.weatherHandler(this.state.DarkSky);
+      this.props.weatherHandler(this.state.DarkSky);     
+  }
+
+  getYelp = async () => {
+    const response= await superagent.get('https://citylab09.herokuapp.com/yelp',{ method: 'GET', data: this.state.keyword });
+    const body = await response;
+      this.setState({
+        Yelp:body.body
+      });
+      console.log(this.state.Yelp);
+      this.props.yelpHandler(this.state.Yelp);
       
   }
 
 
-
 render() {
-    const allWeather = this.state.DarkSky.map((item, i) => {
-        return (    
-             <div key={i}>
-            <h4>{item.time}</h4>
-            <p>{item.forecast}</p>
-            </div>
-        )
-      })
-    
-
     return ( 
         <>
         <form onSubmit={this.handleSubmit} >
         <input onChange={this.handleChange}/>
         <button type="submit">Search</button>
         </form>
-        {/* <Result darkSky={this.state.DarkSky}  /> */}
-        <div>
-            {allWeather}
-        </div>
         </>
     );
   }

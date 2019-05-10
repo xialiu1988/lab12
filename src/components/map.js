@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchForm from './search-form.js';
+// import SearchForm from './search-form.js';
 
 
 
@@ -7,20 +7,14 @@ class Map extends React.Component{
     constructor(props){
         super(props);
       this.state={
-          url:''
+        location:{},
         };
     }
-    handlec=(searchr)=>{
-    let url=`https://maps.googleapis.com/maps/api/staticmap?center=${searchr.latitude}%2c%20${searchr.longitude}&zoom=13&size=600x300&maptype=roadmap&key=${process.env.REACT_APP_API_KEY}`;
-    this.setState({url});
-   this.props.onsetLoc(searchr);
-    };
-    
+   
     render(){
     return (
     <React.Fragment>
-    <SearchForm  onDataFetched={this.handlec} />
-    <img src={this.state.url}/>
+    <img src={"https://maps.googleapis.com/maps/api/staticmap?center=" + this.props.location.latitude + "%2c%20" + this.props.location.longitude + `&zoom=13&size=600x300&maptype=roadmap&key=${process.env.REACT_APP_API_KEY}`}/>
     </React.Fragment>
     )
     }
