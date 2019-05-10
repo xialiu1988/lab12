@@ -1,5 +1,6 @@
 import React from 'react';
 import superagent from 'superagent';
+import { async } from 'q';
 // import Result from './result.js';
 
 class SearchForm extends  React.Component{
@@ -7,11 +8,12 @@ class SearchForm extends  React.Component{
 constructor(props){
     super(props);
     this.state={
-        keyword: 'nothing yet',
+     keyword: 'nothing yet',
        location:{},
        DarkSky: [],
        Yelp:[],
-       Events:[]
+       Events:[],
+       Movies:[]
     };
 }
 
@@ -33,9 +35,9 @@ handleSubmit=async e=>{
     let longitude=body.body.longitude;
     this.setState({
         location:{
-         formatted_address,
+        formatted_address,
         latitude,
-         longitude
+        longitude
      }
     })
     this.props.onDataFetched(this.state.location);
@@ -46,8 +48,10 @@ handleSubmit=async e=>{
 
 callApis=async ()=>{
     await this.getWeather();
-    await  this.getYelp();
+    await this.getMovies();
+    await this.getYelp();
     await this.getEvents();
+
 }
 
 getWeather = async () => {
@@ -60,24 +64,42 @@ getWeather = async () => {
   }
 
   getYelp = async () => {
-    const response= await superagent.get('https://citylab09.herokuapp.com/yelp',{ method: 'GET', data: this.state.keyword });
+    const response= await superagent.get('https://citylab09.herokuapp.com/yelp',{ method: 'GET', data: this.state.location });
     const body = await response;
       this.setState({
         Yelp:body.body
       });
-      console.log(this.state.Yelp);
+     
       this.props.yelpHandler(this.state.Yelp);
       
   }
 
   getEvents = async () => {
-    const response= await superagent.get('https://citylab09.herokuapp.com/events',{ method: 'GET', data: this.state.keyword });
+    const response= await superagent.get('https://citylab09.herokuapp.com/events',{ method: 'GET', data: this.state.location});
+    console.log(response);
     const body = await response;
-      this.setState({
+     await this.setState({
         Events:body.body
       });
       this.props.eventsHandler(this.state.Events);     
   }
+
+
+
+  getMovies= async () => {
+    const response= await superagent.get('https://citylab09.herokuapp.com/movies',{method: 'GET', data: this.state.location});
+    console.log(response);
+    const body = await response;
+      this.setState({
+        Movies:body.body
+      });
+      console.log(this.state.Movies);
+      this.props.movieHandler(this.state.Movies);     
+  }
+
+
+
+
 render() {
     return ( 
         <>

@@ -8,7 +8,8 @@ constructor(props){
     this.state={
         darkSky:[],
         yelps:[],
-        events:[]
+        events:[],
+        movies:[]
     }
 }
   render(){
@@ -24,12 +25,10 @@ constructor(props){
       
 
       const yelpData = this.props.yelps.map((item, i) => {
-        console.log(this.props.yelps);
         return (    
              <div key={i}>
-        <h4>{item.name}</h4>
         <img src={item.image_url}  />
-        <link rel="stylesheet" href={item.url} value="More Info" />
+       <h4>{item.name}</h4> 
         <p>Rating: {item.rating}</p>
         <p>Price: {item.price}</p>
       </div>
@@ -41,8 +40,7 @@ constructor(props){
 
     return (
         <div key={i}>
-        <link href={item.link} value="More Info" />
-         <h4> {item.name}</h4>
+        <a href={item.link}>{item.name}</a>
          <p>{item.event_date}</p>
          <p>Summary: {item.summary}</p> 
         </div>
@@ -51,6 +49,23 @@ constructor(props){
 
   })
 
+  const movieData=this.props.movies.map((item,i)=>{
+    console.log(this.props.movies);
+    return (
+        <div key={i}>
+           <h4> {item.title}</h4>
+         <p>Overview: {item.overview}</p>
+         <p>{item.average_votes}</p>
+         <p>{item.total_votes}</p>
+         <img src={item.image_url} />        
+         <p>{item.release_date}</p> 
+         <p>{item.popularity}</p> 
+         <p>{item.released_on}</p> 
+        </div>
+
+    )
+
+  })
 
 
 
@@ -64,6 +79,9 @@ constructor(props){
          <hr />
               <h2>Get events data from EventBright API</h2>
          {eventsData}
+         <hr />
+              <h2>Get movies from MovieDb API</h2>
+         {movieData}
          </div>
 
       )
