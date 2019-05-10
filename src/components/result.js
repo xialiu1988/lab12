@@ -7,7 +7,8 @@ constructor(props){
     super(props);
     this.state={
         darkSky:[],
-        yelps:[]
+        yelps:[],
+        events:[]
     }
 }
   render(){
@@ -34,10 +35,35 @@ constructor(props){
       </div>
         )
       })
+
+
+  const eventsData=this.props.events.map((item,i)=>{
+
+    return (
+        <div key={i}>
+        <link href={item.link} value="More Info" />
+         <h4> {item.name}</h4>
+         <p>{item.event_date}</p>
+         <p>Summary: {item.summary}</p> 
+        </div>
+
+    )
+
+  })
+
+
+
+
       return(
           <div>
+              <h2>Get weather from DarkSky API</h2>
          {weathers}
+         <hr />
+              <h2>Get yelp data from Yelp API</h2>
          {yelpData}
+         <hr />
+              <h2>Get events data from EventBright API</h2>
+         {eventsData}
          </div>
 
       )

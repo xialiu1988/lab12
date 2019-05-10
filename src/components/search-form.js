@@ -10,7 +10,8 @@ constructor(props){
         keyword: 'nothing yet',
        location:{},
        DarkSky: [],
-       Yelp:[]
+       Yelp:[],
+       Events:[]
     };
 }
 
@@ -46,6 +47,7 @@ handleSubmit=async e=>{
 callApis=async ()=>{
     await this.getWeather();
     await  this.getYelp();
+    await this.getEvents();
 }
 
 getWeather = async () => {
@@ -68,7 +70,14 @@ getWeather = async () => {
       
   }
 
-
+  getEvents = async () => {
+    const response= await superagent.get('https://citylab09.herokuapp.com/events',{ method: 'GET', data: this.state.keyword });
+    const body = await response;
+      this.setState({
+        Events:body.body
+      });
+      this.props.eventsHandler(this.state.Events);     
+  }
 render() {
     return ( 
         <>

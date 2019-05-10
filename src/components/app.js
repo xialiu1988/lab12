@@ -10,7 +10,8 @@ constructor(props){
   this.state={
     location:{},
     DarkSky:[],
-    Yelp: []
+    Yelp: [],
+    Events:[]
   };
 }
 handleWeather = (results) => {
@@ -28,15 +29,25 @@ this.setState({
   Yelp: res
 })
 };
+
+setEvents=(res)=>{
+  this.setState({
+    Events: res
+  })
+}
+
+
+
+
 render(){
 
 
   return (
     <React.Fragment>
     <Header/>
-    <SearchForm onDataFetched={this.setLocation}  weatherHandler={this.handleWeather} yelpHandler={this.setYelp}/>
+    <SearchForm onDataFetched={this.setLocation}  weatherHandler={this.handleWeather} yelpHandler={this.setYelp}  eventsHandler={this.setEvents}/>
     <Map location={this.state.location}/>
-    <Result darkSky={this.state.DarkSky} yelps={this.state.Yelp}/>
+    <Result darkSky={this.state.DarkSky} yelps={this.state.Yelp} events={this.state.Events}/>
     </React.Fragment>
   )
 }
