@@ -1,0 +1,46 @@
+h1{
+    background: $bg_var;
+    font-family: $font_std;
+    font-size:$font_size;
+    text-align: $position_var;
+}
+
+
+h2{
+    background: $bg_var;
+    font-size:$font_size/2;
+    text-align: $position_var;
+}
+p{
+    text-align: $position_var;
+    font-size:$font_size/3;
+}
+
+form{
+    text-align: $position_var;
+}
+
+.map{
+    height:$ht_std*2;
+    width:$wd_std*5;
+    padding-left:$font_size*4.5;
+}
+
+img{   
+    height:$ht_std;
+    width:$wd_std;
+}
+ul{
+    list-style-type: $ul_std;
+}
+li{
+    padding-bottom: $font_size/3;
+}
+section{
+    display: $inline_std;
+    flex-direction: $row_std;
+    width: $wid;
+}
+section div{
+    width:$wid/4;
+}
