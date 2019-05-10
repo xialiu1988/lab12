@@ -11,10 +11,8 @@ class Map extends React.Component{
         };
     }
     handlec=(searchr)=>{
-    console.log(searchr);
     let url=`https://maps.googleapis.com/maps/api/staticmap?center=${searchr.latitude}%2c%20${searchr.longitude}&zoom=13&size=600x300&maptype=roadmap&key=${process.env.REACT_APP_API_KEY}`;
     this.setState({url});
-    console.log(this.state.url);
    this.props.onsetLoc(searchr);
     };
     

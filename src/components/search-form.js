@@ -1,6 +1,6 @@
 import React from 'react';
 import superagent from 'superagent';
-
+// import Result from './result.js';
 
 class SearchForm extends  React.Component{
 
@@ -8,7 +8,8 @@ constructor(props){
     super(props);
     this.state={
         keyword: 'nothing yet',
-       location:{}
+       location:{},
+       DarkSky: []
     };
 }
 
@@ -34,22 +35,54 @@ handleSubmit=async e=>{
     this.setState({
         location:{
          formatted_address,
-           latitude,
+        latitude,
          longitude
      }
     })
     this.props.onDataFetched(this.state.location);
      console.log(this.state.location);
+     this.callApis();
 }
 
 
+callApis=async ()=>{
+    await this.getWeather();
+}
+
+getWeather = async () => {
+    const response= await superagent.get('https://citylab09.herokuapp.com/weather',{ method: 'GET', data: this.state.location });
+    const body = await response;
+      this.setState({
+        DarkSky:body.body
+      });
+      console.log(this.state.DarkSky);
+    //   this.props.weatherHandler(this.state.DarkSky);
+      
+  }
+
+
+
 render() {
+    const allWeather = this.state.DarkSky.map((item, i) => {
+        return (    
+             <div key={i}>
+            <h4>{item.time}</h4>
+            <p>{item.forecast}</p>
+            </div>
+        )
+      })
+    
+
     return ( 
         <>
         <form onSubmit={this.handleSubmit} >
         <input onChange={this.handleChange}/>
         <button type="submit">Search</button>
         </form>
+        {/* <Result darkSky={this.state.DarkSky}  /> */}
+        <div>
+            {allWeather}
+        </div>
         </>
     );
   }
